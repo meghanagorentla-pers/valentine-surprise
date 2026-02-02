@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Unlock My Valentine 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #f6c1cc, #d6b4fc);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    h1, h2 {
+      color: #5a2d82;
+    }
+
+    input {
+      padding: 12px;
+      width: 80%;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .unlock {
+      background: #8e44ad;
+      color: white;
+    }
+
+    .unlock:hover {
+      background: #732d91;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    .letter {
+      background: #fff5fb;
+      padding: 22px;
+      border-radius: 15px;
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .letter p {
+  margin-bottom: 16px;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+
+.reveal.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+    .final {
+      font-size: 22px;
+      margin-top: 18px;
+      color: #c0392b;
+      font-weight: bold;
+    }
+
+    #yesMessage {
+     margin-top: 20px;
+     animation: pop 0.6s ease;
+      }
+
+    @keyframes pop {
+     0% { transform: scale(0.5); opacity: 0; }
+     100% { transform: scale(1); opacity: 1; }
+    }
+
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      position: relative;
+    }
+
+    .yes {
+      background: #e84393;
+      color: white;
+    }
+
+    .no {
+      background: #b2bec3;
+      color: #2d3436;
+      position: absolute;
+    }
+
+    .signature {
+      margin-top: 15px;
+      font-style: italic;
+      color: #6c3483;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- GAME PAGE -->
+  <div class="container" id="game">
+    <h1>🔐 Unlock the Valentine</h1>
+    <p>What date is special to us? 💕</p>
+    <input type="password" id="answer" placeholder="DDMMYYYY">
+    <br>
+    <button class="unlock" onclick="check()">Unlock ❤️</button>
+    <p id="error" style="color:red;"></p>
+  </div>
+
+  <!-- LOVE LETTER PAGE -->
+  <div class="container hidden" id="letterPage">
+
+ <div class="letter">
+  <p class="reveal"><strong>Hey you❤️,</strong></p>
+
+  <p class="reveal">
+    I love the way you love me ❤️
+  </p>
+
+  <p class="reveal">
+    I know we haven’t been able to spend as much time together recently.
+    Me staying at home has been a big part of it, and the stress around family matters
+    has quietly affected me too. I think that’s where that little gap between us came from.
+  </p>
+
+  <p class="reveal">
+    I want to fill that gap, patiently and honestly. I’ll try my best to stay more connected
+    with you, <em>bangaram</em>, even on the days that feel heavy.
+  </p>
+
+  <p class="reveal">
+    What we share teaches me patience and gives me the space to just be myself.
+    With you, I don’t feel the need to change who I am — and I love that I’m still the same
+    with my friends, with my world.
+  </p>
+
+  <p class="reveal">
+    It’s almost been a year already, and that still feels a little unreal in the best way.
+  </p>
+
+  <p class="reveal">
+    So….
+  </p>
+</div>
+
+
+
+    <div class="final">
+      Will you be my Valentine? 💘
+    </div>
+
+    <div class="buttons">
+      <button class="yes" onclick="yesClicked()">YES 💖</button>
+      <button class="no" id="noBtn" onmouseover="runAway()">NO 🙄</button>
+    </div>
+
+    <div id="yesMessage" class="hidden final">
+      YAY!!! 💖 I knew it 😘<br>
+      Happy Valentine’s Day, my love 💝
+    </div>
+
+
+    <div class="signature">
+      — Yours, Meghana ❤️
+    </div>
+  </div>
+
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    function check() {
+      const ans = document.getElementById("answer").value;
+      if (ans === "23022025") {
+        launchConfetti();
+        document.getElementById("bgMusic").play();
+        setTimeout(() => {
+          document.getElementById("game").classList.add("hidden");
+          document.getElementById("letterPage").classList.remove("hidden");
+        }, 1200);
+      } else {
+        document.getElementById("error").innerText = "Hmm… try again 😌";
+      }
+    }
+
+    function launchConfetti() {
+      for (let i = 0; i < 40; i++) {
+        const conf = document.createElement("div");
+        conf.className = "confetti";
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.background = `hsl(${Math.random()*360},100%,70%)`;
+        conf.style.animationDuration = (Math.random() * 2 + 2) + "s";
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 3000);
+      }
+    }
+
+    function runAway() {
+      const btn = document.getElementById("noBtn");
+      const x = Math.random() * 200 - 100;
+      const y = Math.random() * 200 - 100;
+      btn.style.transform = `translate(${x}px, ${y}px)`;
+    }
+
+    function yesClicked() {
+       document.getElementById("yesMessage").classList.remove("hidden");
+       launchConfetti();
+    } 
+
+    const reveals = document.querySelectorAll('.reveal');
+
+function revealOnScroll() {
+  const windowHeight = window.innerHeight;
+
+  reveals.forEach(el => {
+    const elementTop = el.getBoundingClientRect().top;
+    if (elementTop < windowHeight - 50) {
+      el.classList.add('show');
+    }
+  });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+
+
+  </script>
+
+</body>
+</html>
