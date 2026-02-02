@@ -549,8 +549,16 @@
       // Launch initial burst
       launchConfetti();
       
-      // Continue launching confetti every 2 seconds
+      // Continue launching confetti every 500ms for 1.5 seconds
+      let elapsed = 0;
       confettiInterval = setInterval(() => {
+        elapsed += 500;
+        
+        if (elapsed >= 1500) {
+          clearInterval(confettiInterval);
+          return;
+        }
+        
         const emojis = [
           '💕', '💖', '❤️', '💗', '💓', '💛', '💚', '💙', '💜', '🧡',
           '😘', '💋', '😍', '🥰', '✨', '⭐', '💫', '🌟',
@@ -578,7 +586,69 @@
           document.body.appendChild(conf);
           setTimeout(() => conf.remove(), 5000);
         }
-      }, 2000);
+      }, 500);
+    }
+
+    function launchCelebrationConfetti() {
+      const celebrationEmojis = [
+        '🎉', '🎊', '🥳', '🎈','✨', '🌟', '⭐', '💫',
+         '👏', '💯', '🔥', '🎁', '🎀', '🍾', '🥂', '🎵',
+        '🎶', '💃', '🕺', '❤️', '💕', '💖', '💗', '💓', '💝', '💘',
+        '😍', '🥰', '😘', '💋', '🌹', '💐', '🌺', '🌸', '🌷'
+      ];
+      const colors = ['#ff6b9d', '#c44569', '#f8b500', '#8e44ad', '#e74c3c', '#3498db', '#2ecc71', '#f39c12', '#e67e22', '#9b59b6'];
+      
+      // Massive initial burst
+      for (let i = 0; i < 100; i++) {
+        const conf = document.createElement("div");
+        conf.className = "confetti";
+        
+        if (Math.random() > 0.3) {
+          conf.innerText = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+          conf.style.fontSize = (Math.random() * 20 + 20) + 'px';
+        } else {
+          conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+          conf.style.width = (Math.random() * 10 + 8) + 'px';
+          conf.style.height = conf.style.width;
+        }
+        
+        conf.style.left = Math.random() * 100 + "vw";
+        conf.style.animationDuration = (Math.random() * 2.5 + 2) + "s";
+        conf.style.animationDelay = Math.random() * 0.4 + "s";
+        document.body.appendChild(conf);
+        setTimeout(() => conf.remove(), 6000);
+      }
+      
+      // Continue celebration rain for 3 seconds
+      let elapsed = 0;
+      const celebrationInterval = setInterval(() => {
+        elapsed += 400;
+        
+        if (elapsed >= 3000) {
+          clearInterval(celebrationInterval);
+          return;
+        }
+        
+        for (let i = 0; i < 20; i++) {
+          const conf = document.createElement("div");
+          conf.className = "confetti";
+          
+          if (Math.random() > 0.3) {
+            conf.innerText = celebrationEmojis[Math.floor(Math.random() * celebrationEmojis.length)];
+            conf.style.fontSize = (Math.random() * 20 + 20) + 'px';
+          } else {
+            conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+            conf.style.width = (Math.random() * 10 + 8) + 'px';
+            conf.style.height = conf.style.width;
+          }
+          
+          conf.style.left = Math.random() * 100 + "vw";
+          conf.style.animationDuration = (Math.random() * 2.5 + 2) + "s";
+          conf.style.animationDelay = Math.random() * 0.3 + "s";
+          document.body.appendChild(conf);
+          setTimeout(() => conf.remove(), 6000);
+        }
+      }, 400);
     }
 
     function runAway() {
@@ -590,7 +660,7 @@
 
     function yesClicked() {
       document.getElementById("yesMessage").classList.remove("hidden");
-      launchConfetti();
+      launchCelebrationConfetti();
     }
 
     // Add enter key support for password
