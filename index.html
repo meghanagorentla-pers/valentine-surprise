@@ -502,7 +502,7 @@
     function check() {
       const ans = document.getElementById("answer").value;
       if (ans === "23022025") {
-        launchConfetti();
+        startContinuousConfetti();
         document.getElementById("bgMusic").play();
         setTimeout(() => {
           document.getElementById("game").classList.add("hidden");
@@ -512,6 +512,8 @@
         document.getElementById("error").innerText = "Hmm… try again 😌";
       }
     }
+
+    let confettiInterval = null;
 
     function launchConfetti() {
       const emojis = [
@@ -541,6 +543,42 @@
         document.body.appendChild(conf);
         setTimeout(() => conf.remove(), 5000);
       }
+    }
+
+    function startContinuousConfetti() {
+      // Launch initial burst
+      launchConfetti();
+      
+      // Continue launching confetti every 2 seconds
+      confettiInterval = setInterval(() => {
+        const emojis = [
+          '💕', '💖', '❤️', '💗', '💓', '💛', '💚', '💙', '💜', '🧡',
+          '😘', '💋', '😍', '🥰', '✨', '⭐', '💫', '🌟',
+          '🌹', '💐', '🌷', '🌺', '🌸', '💘', '💝', '💞', '💟'
+        ];
+        const colors = ['#ff6b9d', '#c44569', '#f8b500', '#8e44ad', '#e74c3c', '#3498db', '#2ecc71', '#f39c12'];
+        
+        // Launch smaller batches continuously
+        for (let i = 0; i < 15; i++) {
+          const conf = document.createElement("div");
+          conf.className = "confetti";
+          
+          if (Math.random() > 0.4) {
+            conf.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            conf.style.fontSize = (Math.random() * 15 + 20) + 'px';
+          } else {
+            conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+            conf.style.width = (Math.random() * 8 + 8) + 'px';
+            conf.style.height = conf.style.width;
+          }
+          
+          conf.style.left = Math.random() * 100 + "vw";
+          conf.style.animationDuration = (Math.random() * 2 + 2) + "s";
+          conf.style.animationDelay = Math.random() * 0.3 + "s";
+          document.body.appendChild(conf);
+          setTimeout(() => conf.remove(), 5000);
+        }
+      }, 2000);
     }
 
     function runAway() {
